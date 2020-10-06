@@ -1,18 +1,20 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Env } from "./common/dictionary/env";
+import { UsersModule } from "./user/users.module";
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'test',
+      type: "postgres",
+      host: Env.DB_HOST,
+      port: Env.DB_PORT,
+      username: Env.DB_USER,
+      password: Env.DB_PASS,
+      database: Env.DB_NAME,
       autoLoadEntities: true,
       synchronize: true,
+      entities: [],
     }),
     UsersModule,
   ],
