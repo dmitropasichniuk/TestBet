@@ -1,14 +1,12 @@
-export class MatchDictionary {
-    // Good status
-    static WIN: number = 1;
-    static LOOSE: number = 2;
-    static DRAW: number = 3;
-    static IN_PROGRESS: number = 4;
-  }
-  
-  export enum MatchEnum {
-    WIN = MatchDictionary.WIN,
-    LOOSE = MatchDictionary.LOOSE,
-    DRAW = MatchDictionary.DRAW,
-    IN_PROGRESS = MatchDictionary.IN_PROGRESS, 
-  }
+export class MatchStatusDictionary {
+  // Good status
+  static WAITING: number = 1;
+  static STARTING: number = 2;
+  static END: number = 3;
+}
+
+export enum MatchStatusEnum {
+  WAITING = MatchStatusDictionary.WAITING,
+  STARTING = MatchStatusDictionary.STARTING,
+  END = MatchStatusDictionary.END,
+}

@@ -1,23 +1,33 @@
-import { IsInt, Length, IsString, IsNotEmpty} from 'class-validator';
+import { IsInt, Length, IsString, IsNotEmpty, IsEnum} from 'class-validator';
 import { Transform } from 'class-transformer';
+import { MatchResultEnum } from 'src/common/dictionary/matchResult';
+import { MatchStatusEnum } from 'src/common/dictionary/matchStatus';
 
-export class CreateGoodDto {
+export class CreateMatchDto {
   @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
   @IsInt()
-  userId:number;
+  id:number;
 
   @Length(2, 40)
   @IsString()
   @IsNotEmpty()
-  name:string;
+  firstTeam:string;
 
-  @Length(50, 1000)
+  @Length(2, 40)
   @IsString()
   @IsNotEmpty()
-  description: string;
+  secondTeam:string;
 
-  @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
+  @Transform((value) => (Number.isNaN(Number(value)) ? null : Number(value)))
   @IsInt()
-  price: number;
+  @IsEnum(MatchResultEnum)
+  result: MatchResultEnum;
+
+  startDate: Date;
+
+  @Transform((value) => (Number.isNaN(Number(value)) ? null : Number(value)))
+  @IsInt()
+  @IsEnum(MatchStatusEnum)
+  status: MatchStatusEnum;
   
 }

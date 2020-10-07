@@ -1,8 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { MatchDictionary, MatchEnum } from 'src/common/dictionary/matchStatus';
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  MatchResultDictionary,
+  MatchResultEnum,
+} from "src/common/dictionary/matchResult";
+import { MatchStatusEnum } from "src/common/dictionary/matchStatus";
 
 @Entity()
-export class Good {
+export class Match {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,12 +17,20 @@ export class Good {
   secondTeam: string;
 
   @Column({
-    type: 'enum',
-    enum: MatchEnum,
+    type: "enum",
+    enum: MatchResultEnum,
     unique: false,
-    default: MatchDictionary.IN_PROGRESS,
+    default: MatchResultDictionary.IN_PROGRESS,
   })
-  result: MatchEnum;
+  result: MatchResultDictionary;
 
+  @Column()
+  startDate: Date;
 
+  @Column({
+    type: "enum",
+    enum: MatchStatusEnum,
+    unique: false,
+  })
+  status: MatchStatusEnum;
 }

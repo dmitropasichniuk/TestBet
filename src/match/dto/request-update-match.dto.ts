@@ -1,8 +1,9 @@
-import { IsInt, Length, IsString, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
+import { IsInt, Length, IsString, IsNotEmpty, IsEnum } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { GoodEnum } from 'src/common/dictionary/matchStatus';
+import { MatchResultEnum } from 'src/common/dictionary/matchResult';
+import { MatchStatusEnum } from 'src/common/dictionary/matchStatus';
 
-export class UpdateGoodDto {
+export class UpdateMatchDto {
   @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
   @IsInt()
   readonly id: number;
@@ -10,22 +11,22 @@ export class UpdateGoodDto {
   @Length(2, 40)
   @IsString()
   @IsNotEmpty()
-  @IsOptional()
-  name?:string;
+  firstTeam?:string;
 
   @Length(50, 1000)
   @IsString()
   @IsNotEmpty()
-  @IsOptional()
-  description?: string;
-
-  @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
-  @IsInt()
-  @IsOptional()
-  price?: number;
+  secondTeam?: string;
 
   @Transform((value) => (Number.isNaN(Number(value)) ? null : Number(value)))
   @IsInt()
-  @IsEnum(GoodEnum)
-  status?: GoodEnum;
+  @IsEnum(MatchResultEnum)
+  result?: MatchResultEnum;
+
+  startDate?: Date;
+
+  @Transform((value) => (Number.isNaN(Number(value)) ? null : Number(value)))
+  @IsInt()
+  @IsEnum(MatchStatusEnum)
+  status?: MatchStatusEnum;
 }

@@ -1,50 +1,51 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Good } from './match.entity';
-import { CreateGoodDto } from './dto/request-create-match.dto';
-import { UpdateGoodDto } from './dto/request-update-match.dto';
-import { UserService } from 'src/user/user.service';
+import { Match } from './match.entity';
+import { CreateMatchDto } from './dto/request-create-match.dto';
+import { UpdateMatchDto } from './dto/request-update-match.dto';
 
 @Injectable()
-export class GoodService {
+export class MatchService {
   constructor(
-    @InjectRepository(Good)
-    private readonly goodRepository: Repository<Good>,
-    private readonly userService: UserService,
+    @InjectRepository(Match)
+    private readonly matchRepository: Repository<Match>,
   ) {}
 
-  public async create(createGoodDto: CreateGoodDto): Promise<Good> {
-    const good = new Good();
-    const user = await this.userService.findOne(createGoodDto.userId);
-  
-    good.user = user;
-    good.name = createGoodDto.name;
-    good.description = createGoodDto.description;
-    good.price = createGoodDto.price;
+  public async create(createMatchDto: CreateMatchDto): Promise<Match> {
+    const match = new Match();
+    
+    match.id = createMatchDto.id;
+    match.firstTeam = createMatchDto.firstTeam;
+    match.secondTeam = createMatchDto.secondTeam;
+    match.result = createMatchDto.result;
+    match.startDate = createMatchDto.startDate;
+    match.status = createMatchDto.status;
 
-    return this.goodRepository.save(good);
+    return this.matchRepository.save(match);
   }
 
-  public async update(updateGoodDto: UpdateGoodDto): Promise<Good> {
-    const good = await this.goodRepository.findOne(updateGoodDto.id);
+  public async update(updateMatchDto: UpdateMatchDto): Promise<Match> {
+    const match = await this.matchRepository.findOne(updateMatchDto.id);
 
-    good.name = updateGoodDto.name;
-    good.description = updateGoodDto.description;  
-    good.price = updateGoodDto.price;
+    match.firstTeam = updateMatchDto.firstTeam;
+    match.secondTeam = updateMatchDto.secondTeam;
+    match.result = updateMatchDto.result;
+    match.startDate = updateMatchDto.startDate;
+    match.status = updateMatchDto.status;
 
-    return this.goodRepository.save(good);
+    return this.matchRepository.save(match);
   }
 
-  async findAll(): Promise<Good[]> {
-    return this.goodRepository.find();
+  async findAll(): Promise<Match[]> {
+    return this.matchRepository.find();
   }
 
-  findOne(id: number): Promise<Good> {
-    return this.goodRepository.findOne(id);
+  findOne(id: number): Promise<Match> {
+    return this.matchRepository.findOne(id);
   }
 
   async remove(id: number): Promise<void> {
-    await this.goodRepository.delete(id);
+    await this.matchRepository.delete(id);
   }
 }

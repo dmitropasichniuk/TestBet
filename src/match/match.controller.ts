@@ -1,36 +1,36 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { GoodService } from './match.service';
-import { Good } from './match.entity';
-import { CreateGoodDto } from './dto/request-create-match.dto';
-import { UpdateGoodDto } from './dto/request-update-match.dto';
+import { MatchService } from './match.service';
+import { Match } from './match.entity';
+import { CreateMatchDto } from './dto/request-create-match.dto';
+import { UpdateMatchDto } from './dto/request-update-match.dto';
 
-@Controller('good')
-export class GoodController {
-  constructor(private readonly goodService: GoodService) {}
+@Controller('match')
+export class MatchController {
+  constructor(private readonly matchService: MatchService) {}
 
   @Post('create')
-  create(@Body() createGoodDto: CreateGoodDto): Promise<Good> {
-    return this.goodService.create(createGoodDto);
+  create(@Body() creatMatchDto: CreateMatchDto): Promise<Match> {
+    return this.matchService.create(creatMatchDto);
   }
 
   @Post('update')
-  update(@Body() updateGoodDto: UpdateGoodDto): Promise<Good> {
-    return this.goodService.update(updateGoodDto);
+  update(@Body() updateMatchDto: UpdateMatchDto): Promise<Match> {
+    return this.matchService.update(updateMatchDto);
   }
 
   
   @Get()
-  findAll(): Promise<Good[]> {
-    return this.goodService.findAll();
+  findAll(): Promise<Match[]> {
+    return this.matchService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<Good> {
-    return this.goodService.findOne(id);
+  findOne(@Param('id') id: number): Promise<Match> {
+    return this.matchService.findOne(id);
   }
 
   @Delete(':id')
   remove(@Param('id') id: number): Promise<void> {
-    return this.goodService.remove(id);
+    return this.matchService.remove(id);
   }
 }
