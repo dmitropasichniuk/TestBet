@@ -18,19 +18,9 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: number): Promise<User> {
-  //   return this.userService.findOne(id);
-  // }
-
   @Get('findOne')
   findOne(@Body() id: number): Promise<User>{
     return this.userService.findOne(id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
-    return this.userService.remove(id);
   }
 
   @Post('update')

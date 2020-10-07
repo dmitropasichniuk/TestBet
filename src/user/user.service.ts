@@ -15,12 +15,9 @@ export class UserService {
   create(createUserDto: CreateUserDto): Promise<User> {
     const user = new User();
 
-    user.id = createUserDto.id;
     user.login = createUserDto.login;
     user.password = createUserDto.password
-    user.permissionLevel = createUserDto.permissionLevel;
-    user.status = createUserDto.status;
-
+    
     return this.userRepository.save(user);
   }
 
@@ -30,10 +27,6 @@ export class UserService {
 
   findOne(id: number): Promise<User> {
     return this.userRepository.findOne(id);
-  }
-
-  async remove(id: number): Promise<void> {
-    await this.userRepository.delete(id);
   }
 
   public async update(updateUserDto: UpdateUserDto): Promise<User> {

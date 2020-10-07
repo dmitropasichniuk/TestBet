@@ -15,7 +15,6 @@ export class MatchService {
   public async create(createMatchDto: CreateMatchDto): Promise<Match> {
     const match = new Match();
     
-    match.id = createMatchDto.id;
     match.firstTeam = createMatchDto.firstTeam;
     match.secondTeam = createMatchDto.secondTeam;
     match.result = createMatchDto.result;

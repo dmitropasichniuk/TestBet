@@ -1,5 +1,4 @@
 export class PermissionDictionary {
-  // User Roles permission_level
   static USER_CLIENT_PERMISSION_LEVEL: number = 1;
   static USER_ADMIN_PERMISSION_LEVEL: number = 8;
 }

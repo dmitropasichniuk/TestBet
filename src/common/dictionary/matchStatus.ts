@@ -1,5 +1,4 @@
 export class MatchStatusDictionary {
-  // Good status
   static WAITING: number = 1;
   static STARTING: number = 2;
   static END: number = 3;

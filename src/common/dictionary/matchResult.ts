@@ -1,5 +1,4 @@
 export class MatchResultDictionary {
-  // Good status
   static WIN: number = 1;
   static LOOSE: number = 2;
   static DRAW: number = 3;

@@ -4,9 +4,6 @@ import { PermissionEnum } from 'src/common/dictionary/permission';
 import { UserEnum } from 'src/common/dictionary/userStatus';
 
 export class CreateUserDto {
-  @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
-  @IsInt()
-  id:number;
 
   @Length(2, 40)
   @IsString()
@@ -18,14 +15,4 @@ export class CreateUserDto {
   @IsNotEmpty()
   password:string;
 
-  @Transform((value) => (Number.isNaN(Number(value)) ? null : Number(value)))
-  @IsInt()
-  @IsEnum(PermissionEnum)
-  permissionLevel: PermissionEnum;
-
-  @Transform((value) => (Number.isNaN(Number(value)) ? null : Number(value)))
-  @IsInt()
-  @IsEnum(UserEnum)
-  status: UserEnum;
-  
 }
