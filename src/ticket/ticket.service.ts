@@ -4,26 +4,26 @@ import { Repository } from "typeorm";
 import { Ticket } from "./ticket.entity";
 import { CreateTicketDto } from "./dto/request-create-ticket.dto";
 import { UpdateTicketDto } from './dto/request-update-ticket.dto';
-//import { UserService } from "src/user/user.service";
-//import { MatchService } from "src/match/match.service";
+import { UserService } from "src/user/user.service";
+import { MatchService } from "src/match/match.service";
 
 @Injectable()
 export class TicketService {
   constructor(
     @InjectRepository(Ticket)
     private readonly ticketRepository: Repository<Ticket>,
-    //private readonly userService: UserService,
-    //private readonly matchService: MatchService
+    private readonly userService: UserService,
+    private readonly matchService: MatchService,
   ) {}
 
   public async create(createTicketDto: CreateTicketDto): Promise<Ticket> {
     const ticket = new Ticket();
-    //const user = await this.userService.findOne(createTicketDto.userId);
-    //const match = await this.matchService.findOne(createTicketDto.match);
+    const user = await this.userService.findOne(createTicketDto.userId);
+    const match = await this.matchService.findOne(createTicketDto.matchId);
 
     ticket.amount = createTicketDto.amount;
-    //ticket.userId = user.id;
-    //ticket.match = match.id;
+    ticket.user = user;
+    ticket.match = match;
     ticket.payload = createTicketDto.payload;
     ticket.status = createTicketDto.status;
 
@@ -32,12 +32,12 @@ export class TicketService {
 
   public async update(updateTicketDto: UpdateTicketDto): Promise<Ticket> {
     const ticket = await this.ticketRepository.findOne(updateTicketDto.id);
-    //const user = await this.userService.findOne(updateTicketDto.userId);
-    //const match = await this.matchService.findOne(updateTicketDto.match);
+    const user = await this.userService.findOne(updateTicketDto.userId);
+    const match = await this.matchService.findOne(updateTicketDto.matchId);
 
     ticket.amount = updateTicketDto.amount;
-    //ticket.userId = user.id;
-    //ticket.match = match.id;
+    ticket.user = user;
+    ticket.match = match;
     ticket.payload = updateTicketDto.payload;
     ticket.status = updateTicketDto.status;
 

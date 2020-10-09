@@ -7,7 +7,7 @@ import { UserModule } from "src/user/user.module";
 import { MatchModule } from "src/match/match.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Ticket]), UserModule, MatchModule],
+  imports: [TypeOrmModule.forFeature([Ticket]), MatchModule, UserModule],
   providers: [TicketService],
   controllers: [TicketController],
 })

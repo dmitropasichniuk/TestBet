@@ -16,7 +16,7 @@ export class CreateTicketDto {
 
   @Transform((value) => (Number.isNaN(Number(value)) ? null : Number(value)))
   @IsInt()
-  match: number;
+  matchId: number;
 
   @Transform((value) => (Number.isNaN(Number(value)) ? null : Number(value)))
   @IsInt()

@@ -14,11 +14,11 @@ export class Ticket {
 
   @ManyToOne((type) => User, user => user.id)
   @JoinColumn()
-  userId: number;
+  user: User;
 
   @ManyToOne((type) => Match, match => match.id)
   @JoinColumn()
-  match: number;
+  match: Match;
 
   @Column({
     type: "enum",
