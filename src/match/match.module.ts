@@ -8,6 +8,7 @@ import { UserModule } from "src/user/user.module";
 @Module({
   imports: [TypeOrmModule.forFeature([Match]), UserModule],
   providers: [MatchService],
+  exports: [MatchService],
   controllers: [MatchController],
 })
 export class MatchModule {}

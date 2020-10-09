@@ -4,6 +4,7 @@ import { Env } from "./common/dictionary/env";
 import { MatchModule } from "./match/match.module";
 import { TicketModule } from "./ticket/ticket.module";
 import { UserModule } from "./user/user.module";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UserModule } from "./user/user.module";
     UserModule,
     MatchModule,
     TicketModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
