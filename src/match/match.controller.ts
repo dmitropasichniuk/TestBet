@@ -29,6 +29,11 @@ export class MatchController {
     return this.matchService.findOne(id);
   }
 
+  @Get(':status')
+  findAllByStatus(@Param(':status') id: number): Promise<Match> {
+    return this.matchService.findAllByStatus(status);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: number): Promise<void> {
     return this.matchService.remove(id);

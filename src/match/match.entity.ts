@@ -2,8 +2,8 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import {
   MatchResultDictionary,
   MatchResultEnum,
-} from "src/common/dictionary/matchResult";
-import { MatchStatusEnum } from "src/common/dictionary/matchStatus";
+  MatchStatusEnum 
+} from "src/common/dictionary/matchDictionary";
 
 @Entity()
 export class Match {

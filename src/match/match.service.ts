@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Match } from './match.entity';
 import { CreateMatchDto } from './dto/request-create-match.dto';
 import { UpdateMatchDto } from './dto/request-update-match.dto';
+import { MatchStatusEnum } from 'src/common/dictionary/matchDictionary';
 
 @Injectable()
 export class MatchService {
@@ -47,4 +48,9 @@ export class MatchService {
   async remove(id: number): Promise<void> {
     await this.matchRepository.delete(id);
   }
+
+  async findAllByStatus(status: MatchStatusEnum): Promise<Match[]> {
+    return this.matchRepository.find({ where: { status } });
+  }
+
 }
