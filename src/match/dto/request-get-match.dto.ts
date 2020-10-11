@@ -1,17 +1,34 @@
-import { IsInt, IsEnum, IsOptional } from 'class-validator';
-import { PermissionEnum } from '../../common/dictionary/permission';
+import { IsInt, IsEnum, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { MatchStatusEnum } from 'src/common/dictionary/matchDictionary';
+import { MatchResultEnum, MatchStatusEnum } from 'src/common/dictionary/matchDictionary';
 
 export class RequestGetMatchDto {
 
   @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
   @IsInt()
-  @IsEnum(PermissionEnum)
-  permissionLevel?: PermissionEnum;
+  @IsOptional()
+  readonly id?: number;
+
+  @Length(2, 100)
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  firstTeam?: string;
+
+  @Length(2, 40)
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  secondTeam?: string;
 
   @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
-  @IsInt()
+  @IsEnum(MatchResultEnum)
+  @IsOptional()
+  result?: MatchResultEnum;
+
+  @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
   @IsEnum(MatchStatusEnum)
-  status : MatchStatusEnum;
+  @IsOptional()
+  status?: MatchStatusEnum;
+  
 }

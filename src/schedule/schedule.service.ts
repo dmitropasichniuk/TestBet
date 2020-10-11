@@ -19,7 +19,7 @@ export class ScheduleService {
 
     const mathArr: Match[] = await this.matchService.findAllByStatus(searchMatchBy);
 
-    mathArr.map( (eachMatch) => {
+    mathArr.map( (eachMatch: Match) => {
       if (eachMatch.startDate.getTime() < new Date().getTime() && eachMatch.result === MatchStatusEnum.WAITING) {
         eachMatch.status = MatchStatusEnum.STARTING;
       } else if (eachMatch.startDate.getTime() < new Date().getTime()) {
@@ -29,6 +29,18 @@ export class ScheduleService {
       this.matchService.update(eachMatch);
     });
 
-    
+  /////
+
+  const searchMatchByResult: RequestGetMatchDto = new RequestGetMatchDto();
+  
+  searchMatchByResult.result = MatchResultEnum.IN_PROGRESS;
+
+  const mathArrResult: Match[] = await this.matchService.findAllByResult(searchMatchByResult);
+
+  mathArrResult.map((eachMatchResult: Match) => {
+    if (eachMatchResult)
+  })
+   
+
   }
 }

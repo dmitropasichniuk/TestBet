@@ -5,6 +5,7 @@ import { Match } from './match.entity';
 import { CreateMatchDto } from './dto/request-create-match.dto';
 import { UpdateMatchDto } from './dto/request-update-match.dto';
 import { MatchStatusEnum } from 'src/common/dictionary/matchDictionary';
+import { RequestGetMatchDto } from './dto/request-get-match.dto';
 
 @Injectable()
 export class MatchService {
@@ -49,8 +50,12 @@ export class MatchService {
     await this.matchRepository.delete(id);
   }
 
-  async findAllByStatus(status: MatchStatusEnum): Promise<Match[]> {
+  async findAllByStatus(status: RequestGetMatchDto): Promise<Match[]> {
     return this.matchRepository.find({ where: { status } });
+  }
+
+  async findAllByResult(result: RequestGetMatchDto): Promise<Match[]> {
+    return this.matchRepository.find({ where: { result } });
   }
 
 }
