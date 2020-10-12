@@ -5,7 +5,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { ResponseLoginDto } from './dto/response-login.dto';
 import { UserDto } from 'src/user/dto/user.dto';
-import { JwtPayloadData } from './dto/jwt-payload.data';
+import { JwtPayloadData } from './dto/jwt-payload.data.dto';
 import { ProfileDto } from '../user/dto/get-profile.dto';
 
 @Controller('auth')

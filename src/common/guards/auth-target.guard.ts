@@ -1,7 +1,7 @@
 import { ExecutionContext, Injectable, CanActivate } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { PermissionDictionary } from '../dictionary/permission';
-import { JwtPayloadData } from 'src/auth/dto/jwt-payload.data';
+import { JwtPayloadData } from 'src/auth/dto/jwt-payload.data.dto';
 
 @Injectable()
 export class AuthTargetGuard implements CanActivate {

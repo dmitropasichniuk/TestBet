@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus, UnauthorizedException } from '@n
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 import { UserDto } from 'src/user/dto/user.dto';
-import { JwtPayloadData } from './dto/jwt-payload.data';
+import { JwtPayloadData } from './dto/jwt-payload.data.dto';
 import { ResponseLoginDto } from './dto/response-login.dto';
 import { UserDictionary } from '../common/dictionary/userStatus';
 import { ProfileDto } from '../user/dto/get-profile.dto';
