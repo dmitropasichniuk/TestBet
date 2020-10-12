@@ -18,7 +18,7 @@ export class ScheduleService {
     searchMatchBy.status = MatchStatusEnum.WAITING;
 
     const mathArr: Match[] = await this.matchService.findAllByStatus(
-      searchMatchBy
+      searchMatchBy.status
     );
 
     mathArr.map((eachMatch) => {

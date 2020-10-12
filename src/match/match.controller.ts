@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { MatchService } from './match.service';
 import { Match } from './match.entity';
 import { CreateMatchDto } from './dto/request-create-match.dto';
 import { UpdateMatchDto } from './dto/request-update-match.dto';
+import { RequestGetMatchDto } from './dto/request-get-match.dto';
 
 @Controller('match')
 export class MatchController {
@@ -29,8 +30,9 @@ export class MatchController {
     return this.matchService.findOne(id);
   }
 
-  @Get(':status')
-  findAllByStatus(@Param(':status') id: number): Promise<Match> {
+  @Get('/status')
+  findAllByStatus(@Query() status: number): Promise<Match[]> {
+  
     return this.matchService.findAllByStatus(status);
   }
 

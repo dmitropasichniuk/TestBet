@@ -49,9 +49,9 @@ export class MatchService {
     await this.matchRepository.delete(id);
   }
 
-  public async findAllByStatus(requestGetMatchDto: RequestGetMatchDto): Promise<Match[] | null> {
+  public async findAllByStatus(status: number): Promise<Match[] | null> {
     return await this.matchRepository.createQueryBuilder('match')
-      .where(requestGetMatchDto.status ? 'match.status = :status' : 'TRUE', { status: requestGetMatchDto.status })
+      .where(status ? 'match.status = :status' : 'TRUE', { status: status })
       .orderBy('match.id', 'DESC')
       .getMany();
   }
