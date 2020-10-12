@@ -50,12 +50,17 @@ export class MatchService {
     await this.matchRepository.delete(id);
   }
 
-  async findAllByStatus(status: RequestGetMatchDto): Promise<Match[]> {
-    return this.matchRepository.find({ where: { status } });
+  public async findAllByStatus(requestGetMatchDto: RequestGetMatchDto): Promise<Match[] | null> {
+    return await this.matchRepository.createQueryBuilder('match')
+      .where(requestGetMatchDto.status ? 'match.status = :status' : 'TRUE', { status: requestGetMatchDto.status })
+      .orderBy('match.id', 'DESC')
+      .getMany();
   }
 
-  async findAllByResult(result: RequestGetMatchDto): Promise<Match[]> {
-    return this.matchRepository.find({ where: { result } });
+  public async findAllByResult(requestGetMatchDto: RequestGetMatchDto): Promise<Match[] | null> {
+    return await this.matchRepository.createQueryBuilder('match')
+      .where(requestGetMatchDto.result ? 'match.result = :result' : 'TRUE', { result: requestGetMatchDto.result })
+      .orderBy('match.id', 'DESC')
+      .getMany();
   }
-
 }
