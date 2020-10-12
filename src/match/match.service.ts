@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { Match } from './match.entity';
 import { CreateMatchDto } from './dto/request-create-match.dto';
 import { UpdateMatchDto } from './dto/request-update-match.dto';
-import { MatchStatusEnum } from 'src/common/dictionary/matchDictionary';
 import { RequestGetMatchDto } from './dto/request-get-match.dto';
 
 @Injectable()
@@ -53,13 +52,6 @@ export class MatchService {
   public async findAllByStatus(requestGetMatchDto: RequestGetMatchDto): Promise<Match[] | null> {
     return await this.matchRepository.createQueryBuilder('match')
       .where(requestGetMatchDto.status ? 'match.status = :status' : 'TRUE', { status: requestGetMatchDto.status })
-      .orderBy('match.id', 'DESC')
-      .getMany();
-  }
-
-  public async findAllByResult(requestGetMatchDto: RequestGetMatchDto): Promise<Match[] | null> {
-    return await this.matchRepository.createQueryBuilder('match')
-      .where(requestGetMatchDto.result ? 'match.result = :result' : 'TRUE', { result: requestGetMatchDto.result })
       .orderBy('match.id', 'DESC')
       .getMany();
   }
