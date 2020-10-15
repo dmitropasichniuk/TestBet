@@ -3,8 +3,11 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { PermissionEnum } from "src/common/dictionary/permission";
 import { UserDictionary, UserEnum } from "src/common/dictionary/userStatus";
 import { Repository } from "typeorm";
-import { CreateUserDto } from "./dto/create-user.dto";
+import { CreateUserDto } from "./dto/request-create.user.dto";
+import { ProfileDto } from "./dto/get-profile.dto";
+import { RequestGetUserDto } from "./dto/request-get.dto";
 import { UpdateUserDto } from "./dto/request-update.user.dto";
+import { UserDto } from "./dto/user.dto";
 import { UserBalance } from "./user-balance.entity";
 import { User } from "./user.entity";
 
@@ -13,35 +16,47 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    @InjectRepository(UserBalance) private readonly balanceRepository: Repository<UserBalance>,
+    @InjectRepository(UserBalance)
+    private readonly balanceRepository: Repository<UserBalance>
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<UserDto> {
     const user = new User();
 
     user.login = createUserDto.login;
     user.password = createUserDto.password;
 
+    const newUser: User = await this.userRepository.save(user);
     const userBalance: UserBalance = new UserBalance();
+
+    userBalance.user = newUser;
     await this.balanceRepository.save(userBalance);
 
-    return this.userRepository.save(user);
+    return newUser;
   }
 
   async findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  findOne(id: number): Promise<User> {
-    return this.userRepository.findOne(id);
+  findOne(id: number): Promise<UserDto> {
+    return this.userRepository.findOne({
+      where: {
+        id,
+      },
+    });
   }
 
   public async findByLogin(login: string): Promise<User> {
     return await this.userRepository.findOne({ where: { login } });
   }
 
-  public async update(updateUserDto: UpdateUserDto): Promise<User> {
+  public async update(updateUserDto: UpdateUserDto): Promise<UserDto> {
     const user = await this.userRepository.findOne(updateUserDto.id);
+
+    if (!user) {
+      throw new HttpException("User is not found", HttpStatus.NOT_FOUND);
+    }
 
     user.login = updateUserDto.login;
     user.password = updateUserDto.password;
@@ -51,18 +66,11 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async changeStatus(updateUserDto: UpdateUserDto): Promise<User> {
+  async ban(updateUserDto: UpdateUserDto): Promise<UserDto> {
     const user = await this.userRepository.findOne(updateUserDto.id);
 
     if (!user) {
       throw new HttpException("User is not found.", HttpStatus.NOT_FOUND);
-    }
-
-    if (user.permissionLevel === PermissionEnum.USER_ADMIN_PERMISSION_LEVEL) {
-      throw new HttpException(
-        "The access level is insufficient",
-        HttpStatus.NOT_ACCEPTABLE
-      );
     }
 
     if (user.status === UserEnum.USER_STATUS_BANNED) {
@@ -72,8 +80,15 @@ export class UserService {
       );
     }
 
-    user.status = updateUserDto.status;
-    
+    if (user.permissionLevel === PermissionEnum.USER_ADMIN_PERMISSION_LEVEL) {
+      throw new HttpException(
+        "The access level is insufficient",
+        HttpStatus.NOT_ACCEPTABLE
+      );
+    }
+
+    user.status = UserEnum.USER_STATUS_BANNED;
+
     return this.userRepository.save(user);
   }
 }

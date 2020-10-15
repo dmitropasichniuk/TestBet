@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { PermissionDictionary } from 'src/common/dictionary/permission';
 import { PermissionGuard } from 'src/common/guards/permission.guard';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from './dto/request-create.user.dto';
 import { UpdateUserDto } from './dto/request-update.user.dto';
+import { UserDto } from './dto/user.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
@@ -11,7 +12,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('create')
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
     return this.userService.create(createUserDto);
   }
 
@@ -21,18 +22,18 @@ export class UserController {
   }
 
   @Get('findOne')
-  findOne(@Body() id: number): Promise<User>{
+  findOne(@Body() id: number): Promise<UserDto>{
     return this.userService.findOne(id);
   }
 
   @Post('update')
-  update(@Body() updateUserDto: UpdateUserDto): Promise<User> {
+  update(@Body() updateUserDto: UpdateUserDto): Promise<UserDto> {
     return this.userService.update(updateUserDto);
   }
 
-  @UseGuards(new PermissionGuard(PermissionDictionary.USER_ADMIN_PERMISSION_LEVEL))
-  @Post('changeStatus')
-  changeStatus(@Body() updateUserDto: UpdateUserDto): Promise<User> {
+  // @UseGuards(new PermissionGuard(PermissionDictionary.USER_ADMIN_PERMISSION_LEVEL))
+  @Post('ban')
+  ban(@Body() updateUserDto: UpdateUserDto): Promise<UserDto> {
     return this.userService.update(updateUserDto);
   }
 
