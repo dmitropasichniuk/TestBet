@@ -20,7 +20,7 @@ export class UserService {
     private readonly balanceRepository: Repository<UserBalance>
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<UserDto> {
+  async create(createUserDto: CreateUserDto): Promise<UserDto> {    
     const user = new User();
 
     user.login = createUserDto.login;
@@ -40,18 +40,14 @@ export class UserService {
   }
 
   findOne(id: number): Promise<UserDto> {
-    return this.userRepository.findOne({
-      where: {
-        id,
-      },
-    });
+    return this.userRepository.findOne(id)
   }
 
   public async findByLogin(login: string): Promise<User> {
-    return await this.userRepository.findOne({ where: { login } });
+    return await this.userRepository.findOne(login);
   }
 
-  public async update(updateUserDto: UpdateUserDto): Promise<UserDto> {
+  public async update(updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.findOne(updateUserDto.id);
 
     if (!user) {

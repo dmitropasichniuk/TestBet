@@ -22,8 +22,13 @@ export class UserController {
   }
 
   @Get('findOne')
-  findOne(@Body() id: number): Promise<UserDto>{
+  findOne(@Body() id: number): Promise<User>{
     return this.userService.findOne(id);
+  }
+
+  @Get('findByLogin')
+  findByLogin(@Body() login: string): Promise<User>{
+    return this.userService.findByLogin(login);
   }
 
   @Post('update')
