@@ -1,6 +1,7 @@
 import { UserDictionary, UserEnum } from 'src/common/dictionary/userStatus';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import {PermissionEnum, PermissionDictionary} from 'src/common/dictionary/permission'
+import { UserBalance } from './user-balance.entity';
 
 @Entity()
 export class User {
@@ -12,6 +13,10 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToOne((type) => UserBalance, (balance) => balance.user)
+  balance: UserBalance;
+
 
   @Column({
     type: 'enum',

@@ -15,6 +15,12 @@ export class RequestGetUserDto {
 
   @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
   @IsInt()
+  @IsOptional()
+  balance?: number;
+
+
+  @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
+  @IsInt()
   @IsEnum(PermissionEnum)
   permissionLevel?: number;
 

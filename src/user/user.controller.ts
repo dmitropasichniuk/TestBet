@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/c
 import { PermissionDictionary } from 'src/common/dictionary/permission';
 import { PermissionGuard } from 'src/common/guards/permission.guard';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto } from './dto/request-update.user.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 

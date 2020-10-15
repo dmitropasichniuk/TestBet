@@ -4,21 +4,26 @@ import { PermissionEnum } from "src/common/dictionary/permission";
 import { UserDictionary, UserEnum } from "src/common/dictionary/userStatus";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
+import { UpdateUserDto } from "./dto/request-update.user.dto";
+import { UserBalance } from "./user-balance.entity";
 import { User } from "./user.entity";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(UserBalance) private readonly balanceRepository: Repository<UserBalance>,
   ) {}
 
-  create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<User> {
     const user = new User();
 
     user.login = createUserDto.login;
     user.password = createUserDto.password;
+
+    const userBalance: UserBalance = new UserBalance();
+    await this.balanceRepository.save(userBalance);
 
     return this.userRepository.save(user);
   }

@@ -1,3 +1,4 @@
+import { UserBalance } from '../user-balance.entity';
 import { UserDto } from './user.dto';
 
 export class ProfileDto {
@@ -8,12 +9,14 @@ export class ProfileDto {
     return {
       id: user.id,
       login: user.login,
+      balance: user.balance,
       permissionLevel: user.permissionLevel,
       status: user.status,
     };
   }
   id: number;
   login: string;
+  balance: UserBalance;
   permissionLevel: number;
   status: number;
 }
