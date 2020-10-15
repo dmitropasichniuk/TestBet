@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { PermissionEnum } from "src/common/dictionary/permission";
-import { UserEnum } from "src/common/dictionary/userStatus";
+import { UserDictionary, UserEnum } from "src/common/dictionary/userStatus";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
@@ -49,11 +49,8 @@ export class UserService {
   async changeStatus(updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.findOne(updateUserDto.id);
 
-    if (!user){
-      throw new HttpException(
-        "User is not found.",
-        HttpStatus.NOT_FOUND
-      );
+    if (!user) {
+      throw new HttpException("User is not found.", HttpStatus.NOT_FOUND);
     }
 
     if (user.permissionLevel === PermissionEnum.USER_ADMIN_PERMISSION_LEVEL) {
@@ -70,7 +67,8 @@ export class UserService {
       );
     }
 
-
+    user.status = updateUserDto.status;
+    
     return this.userRepository.save(user);
   }
 }
