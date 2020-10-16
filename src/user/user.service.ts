@@ -35,7 +35,7 @@ export class UserService {
     return newUser;
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserDto[]> {
     return this.userRepository.find();
   }
 
@@ -43,11 +43,11 @@ export class UserService {
     return this.userRepository.findOne(id)
   }
 
-  public async findByLogin(login: string): Promise<User> {
+  public async findByLogin(login: string): Promise<UserDto> {
     return await this.userRepository.findOne(login);
   }
 
-  public async update(updateUserDto: UpdateUserDto): Promise<User> {
+  public async update(updateUserDto: UpdateUserDto): Promise<UserDto> {
     const user = await this.userRepository.findOne(updateUserDto.id);
 
     if (!user) {
@@ -62,9 +62,9 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async ban(updateUserDto: UpdateUserDto): Promise<UserDto> {
+  async ban(updateUserDto: UpdateUserDto): Promise<UserDto> { //change status
     const user = await this.userRepository.findOne(updateUserDto.id);
-
+    
     if (!user) {
       throw new HttpException("User is not found.", HttpStatus.NOT_FOUND);
     }
@@ -82,7 +82,7 @@ export class UserService {
         HttpStatus.NOT_ACCEPTABLE
       );
     }
-
+    
     user.status = UserEnum.USER_STATUS_BANNED;
 
     return this.userRepository.save(user);

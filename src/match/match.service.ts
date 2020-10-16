@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { Match } from './match.entity';
 import { CreateMatchDto } from './dto/request-create-match.dto';
 import { UpdateMatchDto } from './dto/request-update-match.dto';
-import { RequestGetMatchDto } from './dto/request-get-match.dto';
 
 @Injectable()
 export class MatchService {
@@ -18,9 +17,7 @@ export class MatchService {
     
     match.firstTeam = createMatchDto.firstTeam;
     match.secondTeam = createMatchDto.secondTeam;
-    match.result = createMatchDto.result;
     match.startDate = createMatchDto.startDate;
-    match.status = createMatchDto.status;
 
     return this.matchRepository.save(match);
   }

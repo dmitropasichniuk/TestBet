@@ -22,13 +22,8 @@ export class UserController {
   }
 
   @Get('findOne')
-  findOne(@Body() id: number): Promise<User>{
+  findOne(@Body() id: number): Promise<UserDto>{
     return this.userService.findOne(id);
-  }
-
-  @Get('findByLogin')
-  findByLogin(@Body() login: string): Promise<User>{
-    return this.userService.findByLogin(login);
   }
 
   @Post('update')
@@ -39,7 +34,7 @@ export class UserController {
   // @UseGuards(new PermissionGuard(PermissionDictionary.USER_ADMIN_PERMISSION_LEVEL))
   @Post('ban')
   ban(@Body() updateUserDto: UpdateUserDto): Promise<UserDto> {
-    return this.userService.update(updateUserDto);
+    return this.userService.ban(updateUserDto);
   }
 
 }

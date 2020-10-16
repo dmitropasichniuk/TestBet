@@ -3,7 +3,6 @@ import { MatchService } from './match.service';
 import { Match } from './match.entity';
 import { CreateMatchDto } from './dto/request-create-match.dto';
 import { UpdateMatchDto } from './dto/request-update-match.dto';
-import { RequestGetMatchDto } from './dto/request-get-match.dto';
 
 @Controller('match')
 export class MatchController {
@@ -25,15 +24,9 @@ export class MatchController {
     return this.matchService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: number): Promise<Match> {
+  @Get('findOne')
+  findOne(@Body() id: number): Promise<Match> {
     return this.matchService.findOne(id);
-  }
-
-  @Get('/status')
-  findAllByStatus(@Query() status: number): Promise<Match[]> {
-  
-    return this.matchService.findAllByStatus(status);
   }
 
   @Delete(':id')

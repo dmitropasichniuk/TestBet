@@ -2,6 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import {
   MatchResultDictionary,
   MatchResultEnum,
+  MatchStatusDictionary,
   MatchStatusEnum 
 } from "src/common/dictionary/matchDictionary";
 
@@ -31,6 +32,7 @@ export class Match {
     type: "enum",
     enum: MatchStatusEnum,
     unique: false,
+    default: MatchStatusDictionary.WAITING,
   })
   status: MatchStatusEnum;
 }
