@@ -2,6 +2,7 @@ import { IsInt, Length, IsString, IsNotEmpty, IsEnum, IsOptional} from 'class-va
 import { Transform } from 'class-transformer';
 import { PermissionEnum } from 'src/common/dictionary/permission';
 import { UserEnum } from 'src/common/dictionary/userStatus';
+import { UserDto } from './user.dto';
 
 export class UpdateUserDto {
   @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
@@ -17,6 +18,9 @@ export class UpdateUserDto {
   @IsString()
   @IsNotEmpty()
   password?:string;
+
+  @IsOptional()
+  parent?: UserDto;
 
   @Transform((value) => Number.isNaN(Number(value)) ? null : Number(value))
   @IsInt()

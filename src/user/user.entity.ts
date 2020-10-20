@@ -1,7 +1,17 @@
-import { UserDictionary, UserEnum } from 'src/common/dictionary/userStatus';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import {PermissionEnum, PermissionDictionary} from 'src/common/dictionary/permission'
-import { UserBalance } from './user-balance.entity';
+import { UserDictionary, UserEnum } from "src/common/dictionary/userStatus";
+import {
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
+import {
+  PermissionEnum,
+  PermissionDictionary,
+} from "src/common/dictionary/permission";
+import { UserBalance } from "./user-balance.entity";
 
 @Entity()
 export class User {
@@ -14,12 +24,15 @@ export class User {
   @Column()
   password: string;
 
+  @ManyToOne((type) => User, (user: User) => user.id, { nullable: true })
+  @JoinColumn()
+  parent: User;
+
   @OneToOne((type) => UserBalance, (balance) => balance.user)
   balance: UserBalance;
 
-
   @Column({
-    type: 'enum',
+    type: "enum",
     enum: PermissionEnum,
     unique: false,
     default: PermissionDictionary.USER_CLIENT_PERMISSION_LEVEL,
@@ -27,7 +40,7 @@ export class User {
   permissionLevel: PermissionEnum;
 
   @Column({
-    type: 'enum',
+    type: "enum",
     enum: UserEnum,
     unique: false,
     default: UserDictionary.USER_STATUS_ACTIVE,

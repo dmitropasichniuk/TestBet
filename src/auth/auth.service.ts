@@ -21,14 +21,12 @@ export class AuthService {
     if (user && user.password === password) {
       return new ProfileDto(user);
     }
-
     return null;
   }
 
   async login(user: UserDto): Promise<ResponseLoginDto> {
     const responseLoginDto: ResponseLoginDto = new ResponseLoginDto();
     const jwtPayloadData = new JwtPayloadData();
-
     if (!user.status ||
       user.status === UserDictionary.USER_STATUS_BANNED
     ) {
@@ -39,7 +37,6 @@ export class AuthService {
     jwtPayloadData.userId = user.id;
     responseLoginDto.accessToken = this.jwtService.sign( { jwtPayloadData } );
     responseLoginDto.user = new ProfileDto(user);
-
     return responseLoginDto;
   }
 

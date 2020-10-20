@@ -31,7 +31,6 @@ export class UserController {
     return this.userService.update(updateUserDto);
   }
 
-  // @UseGuards(new PermissionGuard(PermissionDictionary.USER_ADMIN_PERMISSION_LEVEL))
   @Post('ban')
   ban(@Body() updateUserDto: UpdateUserDto): Promise<UserDto> {
     return this.userService.ban(updateUserDto);

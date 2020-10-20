@@ -9,6 +9,7 @@ export class ProfileDto {
     return {
       id: user.id,
       login: user.login,
+      parent: user.parent,
       balance: user.balance,
       permissionLevel: user.permissionLevel,
       status: user.status,
@@ -16,6 +17,7 @@ export class ProfileDto {
   }
   id: number;
   login: string;
+  parent: UserDto;
   balance: UserBalance;
   permissionLevel: number;
   status: number;

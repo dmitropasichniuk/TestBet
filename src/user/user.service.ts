@@ -25,6 +25,7 @@ export class UserService {
 
     user.login = createUserDto.login;
     user.password = createUserDto.password;
+    user.parent = createUserDto.parent;
 
     const newUser: User = await this.userRepository.save(user);
     const userBalance: UserBalance = new UserBalance();
@@ -56,6 +57,7 @@ export class UserService {
 
     user.login = updateUserDto.login;
     user.password = updateUserDto.password;
+    user.parent = updateUserDto.parent;
     user.permissionLevel = updateUserDto.permissionLevel;
     user.status = updateUserDto.status;
 

@@ -16,11 +16,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(email: string, password: string): Promise<ProfileDto> {
-    const passb64 = crypto.createHmac('sha512', Env.PASS_SALT).update(password).digest('base64');
     
     const user: ProfileDto = await this.authService.validateUser(
       email,
-      passb64,
+      password,
     );
 
     if (!user) {

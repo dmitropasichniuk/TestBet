@@ -1,7 +1,5 @@
-import { IsInt, Length, IsString, IsNotEmpty, IsEnum} from 'class-validator';
-import { Transform } from 'class-transformer';
-import { PermissionEnum } from 'src/common/dictionary/permission';
-import { UserEnum } from 'src/common/dictionary/userStatus';
+import { Length, IsString, IsNotEmpty, IsOptional} from 'class-validator';
+import { UserDto } from './user.dto';
 
 export class CreateUserDto {
 
@@ -15,6 +13,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   password:string;
 
-  
+  @IsOptional()
+  parent?: UserDto;
 
 }
