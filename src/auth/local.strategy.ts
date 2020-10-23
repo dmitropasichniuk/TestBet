@@ -10,15 +10,15 @@ import { ProfileDto } from '../user/dto/get-profile.dto';
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
-      usernameField: 'email',
+      usernameField: 'login',
       passwordField: 'password',
     });
   }
 
-  async validate(email: string, password: string): Promise<ProfileDto> {
+  async validate(login: string, password: string): Promise<ProfileDto> {
     
     const user: ProfileDto = await this.authService.validateUser(
-      email,
+      login,
       password,
     );
 
